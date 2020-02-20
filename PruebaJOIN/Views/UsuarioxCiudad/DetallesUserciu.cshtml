@@ -1,0 +1,37 @@
+﻿@model PruebaJOIN.Models.UsuarioXCiudadCE
+
+<div>
+    <h4>UsuarioXCiudadCE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Observaciones: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obervaciones)
+        </dd>
+
+        <dt>
+            Ciudad: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreCiudad)
+        </dd>
+
+        <dt>
+            Usuario:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreUsuario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Editar", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

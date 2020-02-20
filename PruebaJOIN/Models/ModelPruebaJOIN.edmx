@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PruebaJOINModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCiudad" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioXCiudad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdCiudad" Type="int" Nullable="false" />
+          <Property Name="Obervaciones" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UsuarioXCiudad_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+          <End Role="UsuarioXCiudad" Type="Self.UsuarioXCiudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="UsuarioXCiudad">
+              <PropertyRef Name="IdCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioXCiudad_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioXCiudad" Type="Self.UsuarioXCiudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="UsuarioXCiudad">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CrearUserCiu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Observaciones" Type="varchar" Mode="In" />
+          <Parameter Name="NombreCiudad" Type="varchar" Mode="In" />
+          <Parameter Name="NombreUsuario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CrearUserCiu1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NombreCiudad" Type="varchar" Mode="In" />
+          <Parameter Name="NombreUsuario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertarUserCiu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCiudad" Type="int" Mode="In" />
+          <Parameter Name="idUsuario" Type="int" Mode="In" />
+          <Parameter Name="Observaciones" Type="varchar" Mode="In" />
+          <Parameter Name="nombreCiudad" Type="varchar" Mode="In" />
+          <Parameter Name="nombreUsuario" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="PruebaJOINModelStoreContainer">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioXCiudad" EntityType="Self.UsuarioXCiudad" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UsuarioXCiudad_Ciudad" Association="Self.FK_UsuarioXCiudad_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="UsuarioXCiudad" EntitySet="UsuarioXCiudad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioXCiudad_Usuario" Association="Self.FK_UsuarioXCiudad_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioXCiudad" EntitySet="UsuarioXCiudad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PruebaJOINModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCiudad" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UsuarioXCiudad" Relationship="Self.FK_UsuarioXCiudad_Ciudad" FromRole="Ciudad" ToRole="UsuarioXCiudad" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UsuarioXCiudad" Relationship="Self.FK_UsuarioXCiudad_Usuario" FromRole="Usuario" ToRole="UsuarioXCiudad" />
+        </EntityType>
+        <EntityType Name="UsuarioXCiudad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdCiudad" Type="Int32" Nullable="false" />
+          <Property Name="Obervaciones" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ciudad" Relationship="Self.FK_UsuarioXCiudad_Ciudad" FromRole="UsuarioXCiudad" ToRole="Ciudad" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioXCiudad_Usuario" FromRole="UsuarioXCiudad" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_UsuarioXCiudad_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+          <End Role="UsuarioXCiudad" Type="Self.UsuarioXCiudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="UsuarioXCiudad">
+              <PropertyRef Name="IdCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioXCiudad_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioXCiudad" Type="Self.UsuarioXCiudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="UsuarioXCiudad">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaJOINEntities_Context" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="UsuarioXCiudad" EntityType="Self.UsuarioXCiudad" />
+          <AssociationSet Name="FK_UsuarioXCiudad_Ciudad" Association="Self.FK_UsuarioXCiudad_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="UsuarioXCiudad" EntitySet="UsuarioXCiudad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioXCiudad_Usuario" Association="Self.FK_UsuarioXCiudad_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioXCiudad" EntitySet="UsuarioXCiudad" />
+          </AssociationSet>
+          <FunctionImport Name="CrearUserCiu">
+            <Parameter Name="Observaciones" Mode="In" Type="String" />
+            <Parameter Name="NombreCiudad" Mode="In" Type="String" />
+            <Parameter Name="NombreUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CrearUserCiu1">
+            <Parameter Name="NombreCiudad" Mode="In" Type="String" />
+            <Parameter Name="NombreUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertarUserCiu">
+            <Parameter Name="idCiudad" Mode="In" Type="Int32" />
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="Observaciones" Mode="In" Type="String" />
+            <Parameter Name="nombreCiudad" Mode="In" Type="String" />
+            <Parameter Name="nombreUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PruebaJOINModelStoreContainer" CdmEntityContainer="PruebaJOINEntities_Context">
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="PruebaJOINModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="NombreCiudad" ColumnName="NombreCiudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="PruebaJOINModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioXCiudad">
+            <EntityTypeMapping TypeName="PruebaJOINModel.UsuarioXCiudad">
+              <MappingFragment StoreEntitySet="UsuarioXCiudad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="Obervaciones" ColumnName="Obervaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CrearUserCiu" FunctionName="PruebaJOINModel.Store.CrearUserCiu" />
+          <FunctionImportMapping FunctionImportName="CrearUserCiu1" FunctionName="PruebaJOINModel.Store.CrearUserCiu1" />
+          <FunctionImportMapping FunctionImportName="InsertarUserCiu" FunctionName="PruebaJOINModel.Store.InsertarUserCiu" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
